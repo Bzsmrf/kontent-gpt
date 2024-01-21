@@ -29,7 +29,6 @@ def input_script_language(script):
     ```{script}```
     """
     input_language = api_call(prompt=prompt)
-    print(input_language)
     return input_language
 
 
@@ -149,11 +148,11 @@ def main():
 
     # Display the styled logo
     st.markdown(logo_style, unsafe_allow_html=True)
-    st.image("logo/brand_logo2.png", caption='Beta', use_column_width=False, output_format='auto', width=200)
+    st.image("logo/brand_logo3.jpg", caption='Beta', use_column_width=False, output_format='auto', width=200)
     selected = option_menu(
         menu_title=None,  # required
-        options=["Home", "Feedback", "Contact","About"],  # required
-        icons=["house", "balloon-heart", "envelope", "people"],  # optional
+        options=["Home", "Feedback", "Contact","About", "Bonus"],  # required
+        icons=["house", "balloon-heart", "envelope", "people","award"],  # optional
         menu_icon="cast",  # optional
         default_index=0,  # optional
         orientation="horizontal",
@@ -166,7 +165,7 @@ def main():
         # Step 1: Text Area for script input
         script_input = st.text_area("Drop Your Script Below", placeholder="Get Human Touch and Human Engaging Script")
         checkbox_state = st.checkbox(
-            "Tick me! If you want to Generate Hooks, Captions, Video Shooting tips and Video Editing Tips as per your script.")
+            "Tick me! If you want to Generate Hooks, Captions, Video Shooting Tips and Video Editing Tips as per your Script.")
         button_style = """
                 <style>
                     button {
@@ -319,7 +318,7 @@ def main():
 
         # Step 4: Ask for user preference for subscription
         user_preference = st.radio(
-            "Elevate your social media game with a suite of tools, including thumbnail customization, seamless editing, captivating captions, and much more. "
+            "Automate your content creation process, starting from text generation and extending to video production. "
             "\n Your content, your style – effortlessly perfected for a standout presence. "
             "\nWould you like to Unlock the power of creativity with KontentGPT's upcoming features?", ["Yes", "No"],
             key="user_preference")
@@ -351,6 +350,7 @@ def main():
             """,
             unsafe_allow_html=True
         )
+
     if selected =="About":
         # About us
         st.markdown(
@@ -366,11 +366,24 @@ def main():
         st.markdown(
             """
                <div style="background-color: #0E1117; padding: 2px; text-align: center;">
-                   <p style="margin: 10;"> We are continuously working to launch our final product as soon as possible. Our final product will provide end to end soltuions to land a perfect content. Through the utilization of our final product, content creators will experience seamless automation, making their work not only efficient but also effortlessly streamlined. </p>
+                   <p style="margin: 10;"> We are continuously working to launch our final product as soon as possible. Our upcoming product will provide end to end soltuions to land a perfect content. Through the utilization of our final product, content creators will experience seamless automation, making their work not only efficient but also effortlessly streamlined. </p>
                </div>
                """,
             unsafe_allow_html=True
         )
+
+    if selected == "Bonus":
+        tip="test"
+        st.markdown(
+            """
+            <div style="background-color: #0E1117; padding: 2px; text-align: center;">
+                <p style="margin: 10;"><b>Tip of the day is : </b>We Provide AI LLMs that help content creators to make perfect content.
+                      </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        #st.write("Tip of the day is : ", tip)
 
     # # Title
     # st.title("Improve the Quality of your script with your AI Assistant.")
