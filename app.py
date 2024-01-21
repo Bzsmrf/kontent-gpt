@@ -132,7 +132,7 @@ def feedbackform():
 # Main Streamlit app
 def main():
     # Get the file path for the logo
-    logo_path = os.path.join("logo", "k.png")
+    logo_path = os.path.join("logo", "k.svg")
     new_tab_title = 'KontentGPT'
     # Change the tab title
     st.set_page_config(page_title=new_tab_title, page_icon=logo_path, layout="wide")
@@ -148,7 +148,7 @@ def main():
 
     # Display the styled logo
     st.markdown(logo_style, unsafe_allow_html=True)
-    st.image("logo/brand_logo3.jpg", caption='Beta', use_column_width=False, output_format='auto', width=200)
+    st.image("logo/brand_logo2.svg", caption='Beta', use_column_width=False, output_format='auto', width=200)
     selected = option_menu(
         menu_title=None,  # required
         options=["Home", "Feedback", "Contact","About", "Bonus"],  # required
