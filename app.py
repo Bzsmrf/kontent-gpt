@@ -131,11 +131,24 @@ def feedbackform():
 
 # Main Streamlit app
 def main():
+
     # Get the file path for the logo
     logo_path = os.path.join("logo", "k.svg")
     new_tab_title = 'KontentGPT'
     # Change the tab title
     st.set_page_config(page_title=new_tab_title, page_icon=logo_path, layout="wide")
+    google_analytics_script = """
+                        <!-- Google tag (gtag.js) -->
+                        <script async src="https://www.googletagmanager.com/gtag/js?id=G-N267LHMRTW"></script>
+                        <script>
+                          window.dataLayer = window.dataLayer || [];
+                          function gtag(){dataLayer.push(arguments);}
+                          gtag('js', new Date());
+
+                          gtag('config', 'G-N267LHMRTW');
+                        </script>
+                        """
+    st.markdown(google_analytics_script, unsafe_allow_html=True)
 
     logo_style = """
            <style>
@@ -596,12 +609,13 @@ def main():
             </style>
             """, unsafe_allow_html=True)
 
+
     hide_streamlit_style = """
-                    <style>
-                    #MainMenu {visibility: hidden;}
-                    footer {visibility: hidden;}
-                    </style>
-                    """
+                        <style>
+                        #MainMenu {visibility: hidden;}
+                        footer {visibility: hidden;}
+                        </style>
+                        """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 if __name__ == "__main__":
     main()
