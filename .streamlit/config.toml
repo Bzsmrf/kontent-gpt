@@ -2,3 +2,6 @@
 base="dark"
 primaryColor="#e89404"
 textColor="#ffffff"
+
+[client]
+showErrorDetails = false
