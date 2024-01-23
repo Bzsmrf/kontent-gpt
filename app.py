@@ -1,5 +1,4 @@
 import streamlit as st
-import openai
 import os
 import subprocess
 import re
@@ -7,20 +6,26 @@ import pandas as pd
 from streamlit_option_menu import option_menu
 import streamlit_analytics
 
+import pathlib
+import textwrap
 
-#from feedbackForm import feedbackform
+import google.generativeai as genai
 
-openai.api_key = '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'
+from IPython.display import display
+from IPython.display import Markdown
 
 
-def api_call(prompt, model="gpt-3.5-turbo"):
-    messages = [{"role": "user", "content": prompt}]
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        temperature=0,  # this is the degree of randomness of the model's output
-    )
-    return response.choices[0].message["content"]
+def to_markdown(text):
+  text = text.replace('•', '  *')
+  return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+
+
+genai.configure(api_key="AIzaSyCJS35k9OVgwBgsQ0s5x9V_hEO0jZX_I78")
+
+def api_call(prompt):
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(prompt)
+    return response.text
 
 
 def input_script_language(script):
@@ -79,11 +84,14 @@ def generate_hooks(script, lang):
         """
     hooks = api_call(prompt=prompt)
     return hooks
+
+
 # Function to validate email format
 def validate_email(email):
     # Use a simple regex pattern for basic email format validation
     pattern = r'^\S+@\S+\.\S+$'
     return bool(re.match(pattern, email))
+
 
 # Function to save user feedback to CSV file
 def save_feedback_to_csv(user_email, user_feedback, user_rating, user_preference):
@@ -95,7 +103,7 @@ def save_feedback_to_csv(user_email, user_feedback, user_rating, user_preference
     }
 
     df = pd.DataFrame(data)
-#
+    #
     # Append to existing CSV file or create a new one
     try:
         existing_data = pd.read_csv("user_feedback.csv")
@@ -107,6 +115,7 @@ def save_feedback_to_csv(user_email, user_feedback, user_rating, user_preference
 
     st.success("Feedback saved successfully.")
 
+
 # Main Streamlit app for feedback form
 def feedbackform():
     # Get the file path for the logo
@@ -115,7 +124,7 @@ def feedbackform():
     # Change the tab title
     st.set_page_config(page_title=new_tab_title, page_icon=logo_path, initial_sidebar_state="collapsed")
     # Set page title
-    #st.set_page_config(page_title="Feedback Form", initial_sidebar_state="collapsed")
+    # st.set_page_config(page_title="Feedback Form", initial_sidebar_state="collapsed")
 
     # Set background color to black and text color to white
     st.markdown(
@@ -133,7 +142,6 @@ def feedbackform():
 
 # Main Streamlit app
 def main():
-
     # Get the file path for the logo
     logo_path = os.path.join("logo", "k.svg")
     new_tab_title = 'KontentGPT'
@@ -164,12 +172,12 @@ def main():
     # Display the styled logo
     st.markdown(logo_style, unsafe_allow_html=True)
     st.image("logo/brand_logo2.svg", caption='Beta', use_column_width=False, output_format='auto', width=200)
-    #tracker
+    # tracker
     with streamlit_analytics.track():
         selected = option_menu(
             menu_title=None,  # required
-            options=["Home", "Feedback", "Contact","About", "Bonus"],  # required
-            icons=["house", "balloon-heart", "envelope", "people","award"],  # optional
+            options=["Home", "Feedback", "Contact", "About", "Bonus"],  # required
+            icons=["house", "balloon-heart", "envelope", "people", "award"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -180,7 +188,8 @@ def main():
             st.title("Improve the Quality of your script with your AI Assistant.")
 
             # Step 1: Text Area for script input
-            script_input = st.text_area("Drop Your Script Below", placeholder="Get Human Touch and Human Engaging Script")
+            script_input = st.text_area("Drop Your Script Below",
+                                        placeholder="Get Human Touch and Human Engaging Script")
             checkbox_state = st.checkbox(
                 "Tick me! If you want to Generate Hooks, Captions, Video Shooting Tips and Video Editing Tips as per your Script.")
             button_style = """
@@ -207,38 +216,38 @@ def main():
                       overflow: hidden;
                       transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
                     }
-    
+
                     button:hover {
                       animation: sh0 0.5s ease-in-out both;
                     }
-    
+
                     @keyframes sh0 {
                       0% {
                         transform: rotate(0deg) translate3d(0, 0, 0);
                       }
-    
+
                       25% {
                         transform: rotate(7deg) translate3d(0, 0, 0);
                       }
-    
+
                       50% {
                         transform: rotate(-7deg) translate3d(0, 0, 0);
                       }
-    
+
                       75% {
                         transform: rotate(1deg) translate3d(0, 0, 0);
                       }
-    
+
                       100% {
                         transform: rotate(0deg) translate3d(0, 0, 0);
                       }
                     }
-    
+
                     button:hover span {
                       animation: storm 0.7s ease-in-out both;
                       animation-delay: 0.06s;
                     }
-    
+
                     button::before,
                     button::after {
                       content: '';
@@ -254,22 +263,22 @@ def main():
                       z-index: -1;
                       transform: translate(100%, -25%) translate3d(0, 0, 0);
                     }
-    
+
                     button:hover::before,
                     button:hover::after {
                       opacity: 0.15;
                       transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
                     }
-    
+
                     button:hover::before {
                       transform: translate3d(50%, 0, 0) scale(0.9);
                     }
-    
+
                     button:hover::after {
                       transform: translate(50%, 0) scale(1.1);
                     }
                 </style>
-    
+
                         """
 
             st.markdown(button_style, unsafe_allow_html=True)
@@ -337,7 +346,8 @@ def main():
             user_preference = st.radio(
                 "Automate your content creation process, starting from text generation and extending to video production. "
                 "\n Your content, your style – effortlessly perfected for a standout presence. "
-                "\nWould you like to Unlock the power of creativity with KontentGPT's upcoming features?", ["Yes", "No"],
+                "\nWould you like to Unlock the power of creativity with KontentGPT's upcoming features?",
+                ["Yes", "No"],
                 key="user_preference")
 
             # Step 5: Submit Button
@@ -368,7 +378,7 @@ def main():
                 unsafe_allow_html=True
             )
 
-        if selected =="About":
+        if selected == "About":
             # About us
             st.markdown(
                 """
@@ -390,7 +400,7 @@ def main():
             )
 
         if selected == "Bonus":
-            tip="test"
+            tip = "test"
             st.markdown(
                 """
                 <div style="background-color: #0E1117; padding: 2px; text-align: center;">
@@ -400,7 +410,7 @@ def main():
                 """,
                 unsafe_allow_html=True
             )
-            #st.write("Tip of the day is : ", tip)
+            # st.write("Tip of the day is : ", tip)
 
         # # Title
         # st.title("Improve the Quality of your script with your AI Assistant.")
@@ -540,9 +550,9 @@ def main():
         #                 st.write(result)
         #                 st.markdown("<hr>", unsafe_allow_html=True)
 
-                # Call feedbackForm.py
-                #feedbackform()
-                #subprocess.Popen(["streamlit", "run", "feedbackForm.py"])
+        # Call feedbackForm.py
+        # feedbackform()
+        # subprocess.Popen(["streamlit", "run", "feedbackForm.py"])
 
         # Footer Section
         # st.markdown("<hr>", unsafe_allow_html=True)
@@ -612,7 +622,6 @@ def main():
                     }
             </style>
             """, unsafe_allow_html=True)
-
 
     hide_streamlit_style = """
                         <style>
