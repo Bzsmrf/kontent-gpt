@@ -1,17 +1,14 @@
 import streamlit as st
 import os
-import subprocess
 import re
 import pandas as pd
 from streamlit_option_menu import option_menu
 import streamlit_analytics
 
-import pathlib
 import textwrap
 
 import google.generativeai as genai
 
-from IPython.display import display
 from IPython.display import Markdown
 
 
@@ -51,25 +48,23 @@ def translate_output_language(script, input_language):
 
 def improve_script(script):
     # Prompt
-    prompt = f""" You will be provided an input script and you need to perform the following tasks on the script.
-    Preform the following 2 tasks:
-        - Understand the Objective / Topic of the input script.
-        - Write a perfect, concise script on the same topic. Follow this rule while generating script: Introduction of user should not be in the first line of script. Introduction of user should be in second or later line but not in the first line.
-
-    The input script is delimited by triple backticks \
-    ```{script}```
-
+    prompt = f"""Revamp the script to captivate the audience more effectively.
+    Original Script: {script}
+    Craft an enhanced version in the same language as the original.
+    The improved script should convey more information using concise language.
     """
+
     output = api_call(prompt=prompt)
     return output
 
-def generate_hooks(script, lang):
+def generate_hooks(script):
     prompt = f""" You will be provided with a script and you need to perform the following tasks:
 
         - Provide 10 attention grabbing hook lines and 5 Captions according to output script.
         - Suggest on how to create thumbnail according to output script.
-        - Suggest on how to shoot video and edit video according to output script.
-        - Your output should be in {lang} language only.
+        - Suggest on how to shoot video according to output script.
+        - Suggest on how to edit video according to output script.
+        - Detect the language of the provided input script which is delimited by triple backticks. Provide output script in the same language as of the given input script language.
 
         Script is delimited by triple backticks \
         ```{script}```
@@ -270,35 +265,50 @@ def main():
 
                     # Step 3.1: Improve the script
                     # improved_script = improve_script(script_input,script_type, script_language)
-                    input_script_lang = input_script_language(script_input)
+                    #input_script_lang = input_script_language(script_input)
                     improved_script = improve_script(script_input)
+                    st.write(improved_script)
+                    if checkbox_state:
+                         # Call the function when the checkbox is ticked
+                         st.success("Generating Hooks...")
+                         result = generate_hooks(improved_script)
+                         st.write(
+                             "You can use the below hooks in the first line or in any other line of the script as per your requirement.")
+                         st.write(result)
 
-                    if input_script_lang == "English":
-                        st.success("Improved Script:")
-                        st.write(improved_script)
-                        st.markdown("<hr>", unsafe_allow_html=True)
-                        if checkbox_state:
-                            # Call the function when the checkbox is ticked
-                            st.success("Generating Hooks...")
-                            result = generate_hooks(improved_script, input_script_lang)
-                            st.write(
-                                "You can use the below hooks in the first line or in any other line of the script as per your requirement.")
-                            st.write(result)
-                            st.markdown("<hr>", unsafe_allow_html=True)
-
-                    if not input_script_lang == "English":
-                        output_script = translate_output_language(improved_script, input_script_lang)
-                        st.success("Improved Script:")
-                        st.write(output_script)
-                        st.markdown("<hr>", unsafe_allow_html=True)
-                        if checkbox_state:
-                            # Call the function when the checkbox is ticked
-                            st.success("Generating Hooks...")
-                            result = generate_hooks(output_script, input_script_lang)
-                            st.write(
-                                "You can use the below hooks in the first line or in any other line of the script as per your requirement.")
-                            st.write(result)
-                            st.markdown("<hr>", unsafe_allow_html=True)
+                    # if input_script_lang == "English":
+                    #     st.success("Improved Script:")
+                    #     for chunk in improved_script:
+                    #         st.write(chunk.text)
+                    #     st.markdown("<hr>", unsafe_allow_html=True)
+                    #     if checkbox_state:
+                    #         # Call the function when the checkbox is ticked
+                    #         st.success("Generating Hooks...")
+                    #         result = generate_hooks(improved_script, input_script_lang)
+                    #         st.write(
+                    #             "You can use the below hooks in the first line or in any other line of the script as per your requirement.")
+                    #         #st.write(result)
+                    #         for chunk in result:
+                    #             st.write(chunk.text)
+                    #         st.markdown("<hr>", unsafe_allow_html=True)
+                    #
+                    # if not input_script_lang == "English":
+                    #     output_script = translate_output_language(improved_script, input_script_lang)
+                    #     st.success("Improved Script:")
+                    #     #st.write(output_script)
+                    #     for chunk in output_script:
+                    #         st.write(chunk.text)
+                    #     st.markdown("<hr>", unsafe_allow_html=True)
+                    #     if checkbox_state:
+                    #         # Call the function when the checkbox is ticked
+                    #         st.success("Generating Hooks...")
+                    #         result = generate_hooks(output_script, input_script_lang)
+                    #         st.write(
+                    #             "You can use the below hooks in the first line or in any other line of the script as per your requirement.")
+                    #         #st.write(result)
+                    #         for chunk in result:
+                    #             st.write(chunk.text)
+                    #         st.markdown("<hr>", unsafe_allow_html=True)
             st.write("Please note that switching tabs will refresh your page. You may loose your current state/data.")
 
         if selected == "Feedback":
