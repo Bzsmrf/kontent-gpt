@@ -22,7 +22,7 @@ genai.configure(api_key="AIzaSyCJS35k9OVgwBgsQ0s5x9V_hEO0jZX_I78")
 def api_call(prompt):
     model = genai.GenerativeModel('gemini-pro')
     response = model.generate_content(prompt)
-    return response.text
+    return response
 
 
 def input_script_language(script):
@@ -69,8 +69,11 @@ def generate_hooks(script):
         Script is delimited by triple backticks \
         ```{script}```
         """
-    hooks = api_call(prompt=prompt)
-    return hooks
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(prompt)
+    return response.text
+    # hooks = api_call(prompt=prompt)
+    # return hooks
 
 
 # Function to validate email format
@@ -148,8 +151,8 @@ def main():
     with streamlit_analytics.track():
         selected = option_menu(
             menu_title=None,  # required
-            options=["Home", "Feedback", "Contact", "About", "Bonus"],  # required
-            icons=["house", "balloon-heart", "envelope", "people", "award"],  # optional
+            options=["Home", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
+            icons=["house","camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -267,14 +270,19 @@ def main():
                     # improved_script = improve_script(script_input,script_type, script_language)
                     #input_script_lang = input_script_language(script_input)
                     improved_script = improve_script(script_input)
-                    st.write(improved_script)
+                    #st.write(improved_script)
+                    for chunk in improved_script:
+                        output_script=chunk.text
+                        st.write(chunk.text)
                     if checkbox_state:
                          # Call the function when the checkbox is ticked
                          st.success("Generating Hooks...")
-                         result = generate_hooks(improved_script)
+                         result = generate_hooks(output_script)
                          st.write(
                              "You can use the below hooks in the first line or in any other line of the script as per your requirement.")
                          st.write(result)
+                         # for chunk in result:
+                         #    st.write(chunk.text)
 
                     # if input_script_lang == "English":
                     #     st.success("Improved Script:")
@@ -310,6 +318,13 @@ def main():
                     #             st.write(chunk.text)
                     #         st.markdown("<hr>", unsafe_allow_html=True)
             st.write("Please note that switching tabs will refresh your page. You may loose your current state/data.")
+
+        if selected == "How to Use":
+            # Replace 'your_video_path' with the actual path to your video file
+            video_path = 'video/tutorial.mp4'
+
+            # Display the video
+            st.video(video_path, format="video/mp4", start_time=0)
 
         if selected == "Feedback":
             # Title
