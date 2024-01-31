@@ -13,11 +13,12 @@ from IPython.display import Markdown
 
 
 def to_markdown(text):
-  text = text.replace('•', '  *')
-  return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+    text = text.replace('•', '  *')
+    return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
 
 genai.configure(api_key="AIzaSyCJS35k9OVgwBgsQ0s5x9V_hEO0jZX_I78")
+
 
 def api_call(prompt):
     model = genai.GenerativeModel('gemini-pro')
@@ -30,7 +31,7 @@ def input_script_language(script):
     Do not provide any explanation. Just provide Language Name.
     Check whether the text is a mixture of two languages, then provide the mixture language name only. For eg: mixture of Hindi and English language is known as Hinglish Language.
     The input script is delimited by triple backticks \
-    ```{script}```
+    {script}
     """
     input_language = api_call(prompt=prompt)
     return input_language
@@ -40,7 +41,7 @@ def translate_output_language(script, input_language):
     # check output lang n input, if they are same then provide script as it is otherwise translate output script into {lang}
     prompt = f"""
     Translate the below input script in {input_language}, Script is delimited by triple backticks \
-    ```{script}```
+    {script}
     """
     output_script = api_call(prompt=prompt)
     return output_script
@@ -53,9 +54,18 @@ def improve_script(script):
     Craft an enhanced version in the same language as the original.
     The improved script should convey more information using concise language.
     """
+    #
+    # prompt = f"""Revamp the script to captivate the audience more effectively.
+    # Original Script: {script}
+    # Hooks: {hooks}
+    # Craft an enhanced version in the same language as the original.
+    # The improved script should convey more information using concise language.
+    # Try to use above hooks and strategically incorporate them at the beginning, between sections, and at the end of the script as needed.
+    # """
 
     output = api_call(prompt=prompt)
     return output
+
 
 def generate_hooks(script):
     prompt = f""" You will be provided with a script and you need to perform the following tasks:
@@ -67,7 +77,7 @@ def generate_hooks(script):
         - Detect the language of the provided input script which is delimited by triple backticks. Provide output script in the same language as of the given input script language.
 
         Script is delimited by triple backticks \
-        ```{script}```
+        {script}
         """
     model = genai.GenerativeModel('gemini-pro')
     response = model.generate_content(prompt)
@@ -146,13 +156,14 @@ def main():
 
     # Display the styled logo
     st.markdown(logo_style, unsafe_allow_html=True)
-    st.image("logo/brand_logo2.svg", caption='Beta [Experiment]', use_column_width=False, output_format='auto', width=200)
+    st.image("logo/brand_logo2.svg", caption='Beta [Experiment]', use_column_width=False, output_format='auto',
+             width=200)
     # tracker
     with streamlit_analytics.track():
         selected = option_menu(
             menu_title=None,  # required
             options=["Home", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
-            icons=["house","camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
+            icons=["house", "camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -160,13 +171,12 @@ def main():
 
         if selected == "Home":
             # Title
-            st.title("Improve the Quality of your script with your AI Assistant.")
+            st.title("Improve the quality of your script with the help of your AI assistant.")
 
             # Step 1: Text Area for script input
             script_input = st.text_area("Drop Your Script Below",
                                         placeholder="Get Human Touch and Human Engaging Script")
-            checkbox_state = st.checkbox(
-                "Tick me! If you want to Generate Hooks, Captions, Thumbnail Tips, Video Shooting Tips and Video Editing Tips as per your Script.")
+            checkbox_state = st.checkbox("Check the box for personalized tips on generating hooks, captions, thumbnails, video shooting, and editing according to your script.")
             button_style = """
                     <style>
                         button {
@@ -268,21 +278,21 @@ def main():
 
                     # Step 3.1: Improve the script
                     # improved_script = improve_script(script_input,script_type, script_language)
-                    #input_script_lang = input_script_language(script_input)
+                    # input_script_lang = input_script_language(script_input)
                     improved_script = improve_script(script_input)
-                    #st.write(improved_script)
+                    # st.write(improved_script)
                     for chunk in improved_script:
-                        output_script=chunk.text
+                        output_script = chunk.text
                         st.write(chunk.text)
                     if checkbox_state:
-                         # Call the function when the checkbox is ticked
-                         st.success("Generating Hooks...")
-                         result = generate_hooks(output_script)
-                         st.write(
-                             "You can use the below hooks in the first line or in any other line of the script as per your requirement.")
-                         st.write(result)
-                         # for chunk in result:
-                         #    st.write(chunk.text)
+                        # Call the function when the checkbox is ticked
+                        st.success("Generating Hooks...")
+                        result = generate_hooks(output_script)
+                        st.write(
+                            "You can use the below hooks in the first line or in any other line of the script as per your requirements.")
+                        st.write(result)
+                        # for chunk in result:
+                        #    st.write(chunk.text)
 
                     # if input_script_lang == "English":
                     #     st.success("Improved Script:")
@@ -317,7 +327,7 @@ def main():
                     #         for chunk in result:
                     #             st.write(chunk.text)
                     #         st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("Please note that switching tabs will refresh your page. You may loose your current state/data.")
+            st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
 
         if selected == "How to Use":
             # Replace 'your_video_path' with the actual path to your video file
@@ -340,7 +350,7 @@ def main():
 
             # Step 3: Ask for feedback and rating
             user_feedback = st.text_area("Please provide your valuable feedback.",
-                                         placeholder="What do you like the most? \nSuggest us on how we can improve.",
+                                         placeholder="What do you like the most? \nSuggest how we can improve.",
                                          key="user_feedback")
             user_rating = st.slider("Rate the script out of 10", 1, 10, 8, key="user_rating")
 
@@ -361,7 +371,7 @@ def main():
                 else:
                     # Step 6: Save responses to CSV file
                     save_feedback_to_csv(user_email, user_feedback, user_rating, user_preference)
-            st.write("Please note that switching tabs will refresh your page. You may loose your current state/data.")
+            st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
 
         if selected == "Contact":
             # Contact us
@@ -385,7 +395,7 @@ def main():
             st.markdown(
                 """
                 <div style="background-color: #0E1117; padding: 2px; text-align: center;">
-                    <p style="margin: 10;"><b></b>We Provide AI LLMs that help content creators to make perfect content.
+                    <p style="margin: 10;"><b></b>We provide AI LLMs that help content creators to create perfect content.
                           </p>
                 </div>
                 """,
@@ -395,7 +405,7 @@ def main():
             st.markdown(
                 """
                    <div style="background-color: #0E1117; padding: 2px; text-align: center;">
-                       <p style="margin: 10;"> We are continuously working to launch our final product as soon as possible. Our upcoming product will provide end to end soltuions to land a perfect content. Through the utilization of our final product, content creators will experience seamless automation, making their work not only efficient but also effortlessly streamlined. </p>
+                       <p style="margin: 10;"> We are constantly striving to launch our final product as soon as possible. Our upcoming product will offer end-to-end solutions to create perfect content. With our final product, content creators will enjoy seamless automation, making their work not only efficient but also effortlessly streamlined. </p>
                    </div>
                    """,
                 unsafe_allow_html=True
@@ -414,13 +424,13 @@ def main():
                           aaur iski vajah se aaj savitri jindal, india ki richest woman hai, jinki net worth 25.3 billion dollars ki hai. Isi tarah"
                           <br><br>
                           In the above example, last line is connected to the first line and user will rewatch your video without realising they are rewatching your video.
-                          
+
                 </div>
                 """,
                 unsafe_allow_html=True
             )
 
-  # Footer
+    # Footer
 
     st.markdown(
         """
