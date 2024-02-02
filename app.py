@@ -395,7 +395,7 @@ def main():
             st.markdown(
                 """
                 <div style="background-color: #0E1117; padding: 2px; text-align: center;">
-                    <p style="margin: 10;"><b></b>We provide AI LLMs that help content creators to create perfect content.
+                    <p style="margin: 10;"><b></b>We provide AI Technology that help content creators to create perfect content.
                           </p>
                 </div>
                 """,
