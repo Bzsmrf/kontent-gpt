@@ -49,13 +49,22 @@ def translate_output_language(script, input_language):
 
 def improve_script(script):
     # Prompt
-    prompt = f"""Revamp the script to captivate the audience more effectively.
-    Original Script: {script}
-    Craft an enhanced version in the same language as the original.
-    The improved script should convey more information using concise language.
-    """
-    #
     # prompt = f"""Revamp the script to captivate the audience more effectively.
+    # Original Script: {script}
+    # Detect the language of the Original Script and provide each and every ouptut in the same language.
+    # Craft an enhanced version in the same language as the original script language.
+    # Add attention grabbing hook lines in the starting and end of the script.
+    # Enhance the way of story telling.
+    # The improved script should convey more information using concise language.
+    # """
+    prompt = f"""Revise the script to engage the audience more effectively.
+    Original Script: {script}
+    Determine the language of the Original Script and ensure all outputs are in the same language.
+    Create an enhanced version in the same language as the original script, incorporating attention-grabbing hook lines at the beginning, in between and end.
+    The improved script should convey additional information using concise language.
+    """
+
+    #prompt = f"""Revamp the script to captivate the audience more effectively.
     # Original Script: {script}
     # Hooks: {hooks}
     # Craft an enhanced version in the same language as the original.
@@ -70,11 +79,12 @@ def improve_script(script):
 def generate_hooks(script):
     prompt = f""" You will be provided with a script and you need to perform the following tasks:
 
-        - Provide 10 attention grabbing hook lines and 5 Captions according to output script.
+        - Provide 10 attention grabbing hook lines and 5 short Captions according to output script.
         - Suggest on how to create thumbnail according to output script.
         - Suggest on how to shoot video according to output script.
         - Suggest on how to edit video according to output script.
         - Detect the language of the provided input script which is delimited by triple backticks. Provide output script in the same language as of the given input script language.
++
 
         Script is delimited by triple backticks \
         {script}
@@ -171,11 +181,11 @@ def main():
 
         if selected == "Home":
             # Title
-            st.title("Improve the quality of your script with the help of your AI assistant.")
+            st.title("Your personal virtual scriptwriter")
 
             # Step 1: Text Area for script input
-            script_input = st.text_area("Drop Your Script Below",
-                                        placeholder="Get Human Touch and Human Engaging Script")
+            script_input = st.text_area("Drop the information you want in your script",
+                                        placeholder="Get professional script in just seconds ")
             checkbox_state = st.checkbox("Check the box for personalized tips on generating hooks, captions, thumbnails, video shooting, and editing according to your script.")
             button_style = """
                     <style>
@@ -395,7 +405,7 @@ def main():
             st.markdown(
                 """
                 <div style="background-color: #0E1117; padding: 2px; text-align: center;">
-                    <p style="margin: 10;"><b></b>We provide AI Technology that help content creators to create perfect content.
+                    <p style="margin: 10;"><b></b>We provide personal virtual scriptwriter.
                           </p>
                 </div>
                 """,
