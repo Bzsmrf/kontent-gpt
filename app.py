@@ -47,45 +47,95 @@ def translate_output_language(script, input_language):
     return output_script
 
 
-def improve_script(script):
+def improve_script(script,type):
     # Prompt
-    # prompt = f"""Revamp the script to captivate the audience more effectively.
-    # Original Script: {script}
-    # Detect the language of the Original Script and provide each and every ouptut in the same language.
-    # Craft an enhanced version in the same language as the original script language.
-    # Add attention grabbing hook lines in the starting and end of the script.
-    # Enhance the way of story telling.
-    # The improved script should convey more information using concise language.
-    # """
+    short_prompt = f"""Revamp the script to captivate the audience more effectively.
+    Original Script: {script}
+    Detect the language of the Original Script and provide each and every ouptut in the same language.
+    Craft an enhanced version in the same language as the original script language.
+    Add attention grabbing hook line in the starting of the script.
+    Enhance the way of story telling.
+    The improved script should convey more information using concise language.
+    """
     prompt = f"""Revise the script to engage the audience more effectively.
     Original Script: {script}
     Determine the language of the Original Script and ensure all outputs are in the same language.
     Create an enhanced version in the same language as the original script, incorporating attention-grabbing hook lines at the beginning, in between and end.
     The improved script should convey additional information using concise language.
     """
+    long_prompt= f"""
+    You will receive rough script data to craft a compelling YouTube documentary video script in a captivating narrative style.
+    
+    Instructions:    
+    Introduction: Begin with a captivating introduction that intrigues and engages the audience, providing an overview of the video's topic while creating suspense.    
+    Pose Questions: Ask a minimum of five thought-provoking questions that will be answered throughout the video, enhancing viewer curiosity and anticipation.
+    Video Information Summary: Offer a concise summary of the content covered in the video, giving viewers an idea of what to expect.
+    Detailed Answers: Address each question raised in the introduction by:
+            with detailed responses, 
+            explaining each answer with the help of examples, 
+            presented in a narrative storytelling format that captivates the audience's attention and enriches their understanding.
+    Outro: Conclude the video with a compelling outro, summarizing key points and leaving the audience with a lasting impression or a call to action.
+    
+    Please provide a complete documentary script in HINDI language only.
+    
+    Input rough script data: {script}
+    
+    """
+    if type == "Short Form":
+        prompt=short_prompt
+    else:
+        prompt=long_prompt
+    output = api_call(prompt=prompt)
+    return output
 
-    #prompt = f"""Revamp the script to captivate the audience more effectively.
-    # Original Script: {script}
-    # Hooks: {hooks}
-    # Craft an enhanced version in the same language as the original.
-    # The improved script should convey more information using concise language.
-    # Try to use above hooks and strategically incorporate them at the beginning, between sections, and at the end of the script as needed.
-    # """
+def adjust_script(script_input, sponsor_input):
+    # prompt = f"""You will be provided with a content creator's original script and product promotional lines. Your task is to seamlessly integrate the promotional lines into the original script while ensuring they appear as natural parts of the narrative. Follow these guidelines:
+    #
+    #         - Understand the provided script and promotional lines. If promotional lines are lengthy, consider breaking them into smaller parts for better integration.
+    #         - Add promotional lines into the original script in a manner that they blend harmoniously with the existing content.
+    #         - Craft promotional lines that are highly engaging and closely connected to the original script, compelling users to remain attentive.
+    #
+    #        Here are the input script and promotional lines for your reference:
+    #
+    #         User's Original Script: {script_input}
+    #         Promotional Lines: {sponsor_input}
+    #
+    #         Please provide the output script with integrated promotional lines.
+    #     """
 
+    prompt = f""" You will be provided with a content creators original script and product promotional lines. You need to perform the following tasks:
+
+        - You need to add promotional lines in original script in such a way that promotional lines should look like that they are a part of script.
+        - Make promotional lines super engaging and connected to the original script that user is unable to skip the promotional part.
+
+       Understand the below Input Script and Promotional lines :
+
+        User's Original Script : {script_input}
+        Promotional Lines : {sponsor_input}
+
+        Please provide the output script after integrating promotional lines into User's Original Script.
+    """
     output = api_call(prompt=prompt)
     return output
 
 
 def generate_hooks(script):
+#     prompt = f""" You will be provided with a script and you need to perform the following tasks:
+#
+#         - Provide 10 attention grabbing hook lines and 5 short Captions according to output script.
+#         - Suggest on how to create thumbnail according to output script.
+#         - Suggest on how to shoot video according to output script.
+#         - Suggest on how to edit video according to output script.
+#         - Detect the language of the provided input script which is delimited by triple backticks. Provide output script in the same language as of the given input script language.
+# +
+#
+#         Script is delimited by triple backticks \
+#         {script}
+#         """
     prompt = f""" You will be provided with a script and you need to perform the following tasks:
 
-        - Provide 10 attention grabbing hook lines and 5 short Captions according to output script.
-        - Suggest on how to create thumbnail according to output script.
-        - Suggest on how to shoot video according to output script.
-        - Suggest on how to edit video according to output script.
+        - Provide 3 attention grabbing hook lines and 3 short Captions according to output script.
         - Detect the language of the provided input script which is delimited by triple backticks. Provide output script in the same language as of the given input script language.
-+
-
         Script is delimited by triple backticks \
         {script}
         """
@@ -172,12 +222,13 @@ def main():
     with streamlit_analytics.track():
         selected = option_menu(
             menu_title=None,  # required
-            options=["Home", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
-            icons=["house", "camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
+            options=["Home", "Sponsor", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
+            icons=["house", "coin","camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
         )
+
 
         if selected == "Home":
             # Title
@@ -186,7 +237,8 @@ def main():
             # Step 1: Text Area for script input
             script_input = st.text_area("Drop the information you want in your script",
                                         placeholder="Get professional script in just seconds ")
-            checkbox_state = st.checkbox("Check the box for personalized tips on generating hooks, captions, thumbnails, video shooting, and editing according to your script.")
+            script_type_option = st.selectbox("Choose Script Type", ["Short Form", "Long Form"])
+            checkbox_state = st.checkbox("Check the box for personalized hooks and captions according to your script.")
             button_style = """
                     <style>
                         button {
@@ -289,17 +341,17 @@ def main():
                     # Step 3.1: Improve the script
                     # improved_script = improve_script(script_input,script_type, script_language)
                     # input_script_lang = input_script_language(script_input)
-                    improved_script = improve_script(script_input)
+                    improved_script = improve_script(script_input, script_type_option)
                     # st.write(improved_script)
                     for chunk in improved_script:
                         output_script = chunk.text
                         st.write(chunk.text)
                     if checkbox_state:
                         # Call the function when the checkbox is ticked
-                        st.success("Generating Hooks...")
+                        st.success("Generating Hooks and Captions...")
                         result = generate_hooks(output_script)
                         st.write(
-                            "You can use the below hooks in the first line or in any other line of the script as per your requirements.")
+                            "You can use the below hooks in the first line of your script.")
                         st.write(result)
                         # for chunk in result:
                         #    st.write(chunk.text)
@@ -339,12 +391,166 @@ def main():
                     #         st.markdown("<hr>", unsafe_allow_html=True)
             st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
 
+        if selected == "Sponsor":
+            # Title
+            st.title("Add promotional lines into your script smartly")
+
+            # Step 1: Text Area for script input
+            script_input = st.text_area("Drop your script below.",
+                                        placeholder="Your main script ")
+            sponsor_input = st.text_area("Drop the promotional lines below you want in your script",
+                                         placeholder="Promotional Lines... ")
+            button_style = """
+                                <style>
+                                    button {
+                                  position: relative;
+                                  margin: 0;
+                                  padding: 0.8em 1em;
+                                  outline: none;
+                                  text-decoration: none;
+                                  display: flex;
+                                  justify-content: center;
+                                  align-items: center;
+                                  cursor: pointer;
+                                  border: none;
+                                  text-transform: uppercase;
+                                  background-color: #333;
+                                  border-radius: 10px;
+                                  color: #fff;
+                                  font-weight: 300;
+                                  font-size: 18px;
+                                  font-family: inherit;
+                                  z-index: 0;
+                                  overflow: hidden;
+                                  transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+                                }
+
+                                button:hover {
+                                  animation: sh0 0.5s ease-in-out both;
+                                }
+
+                                @keyframes sh0 {
+                                  0% {
+                                    transform: rotate(0deg) translate3d(0, 0, 0);
+                                  }
+
+                                  25% {
+                                    transform: rotate(7deg) translate3d(0, 0, 0);
+                                  }
+
+                                  50% {
+                                    transform: rotate(-7deg) translate3d(0, 0, 0);
+                                  }
+
+                                  75% {
+                                    transform: rotate(1deg) translate3d(0, 0, 0);
+                                  }
+
+                                  100% {
+                                    transform: rotate(0deg) translate3d(0, 0, 0);
+                                  }
+                                }
+
+                                button:hover span {
+                                  animation: storm 0.7s ease-in-out both;
+                                  animation-delay: 0.06s;
+                                }
+
+                                button::before,
+                                button::after {
+                                  content: '';
+                                  position: absolute;
+                                  right: 0;
+                                  bottom: 0;
+                                  width: 100px;
+                                  height: 100px;
+                                  border-radius: 50%;
+                                  background: #fff;
+                                  opacity: 0;
+                                  transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
+                                  z-index: -1;
+                                  transform: translate(100%, -25%) translate3d(0, 0, 0);
+                                }
+
+                                button:hover::before,
+                                button:hover::after {
+                                  opacity: 0.15;
+                                  transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+                                }
+
+                                button:hover::before {
+                                  transform: translate3d(50%, 0, 0) scale(0.9);
+                                }
+
+                                button:hover::after {
+                                  transform: translate(50%, 0) scale(1.1);
+                                }
+                            </style>
+
+                                    """
+
+            st.markdown(button_style, unsafe_allow_html=True)
+
+            # Step 2: Submit Button
+            if st.button("Submit", key="submit_button"):
+                # Step 3: Perform tasks on submit
+                if not script_input:
+                    st.warning("Please enter a script before submitting.")
+                if not sponsor_input:
+                    st.warning("Please enter promotional lines before submitting.")
+
+                else:
+                    st.text("Please wait, Great results take time to appear.")
+
+                    # Step 3.1: Add sponsor script to the original script
+                    improved_script = adjust_script(script_input, sponsor_input)
+                    # st.write(improved_script)
+                    for chunk in improved_script:
+                        st.write(chunk.text)
+
+            st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
+
         if selected == "How to Use":
             # Replace 'your_video_path' with the actual path to your video file
-            video_path = 'video/tutorial.mp4'
+            #video_path = 'video/tutorial.mp4'
 
             # Display the video
-            st.video(video_path, format="video/mp4", start_time=0)
+            #st.video(video_path, format="video/mp4", start_time=0)
+            st.markdown(
+                """
+                <div style="background-color: #0E1117; padding: 2px; text-align: center;">
+                    <p style="margin: 10;"><h4>
+Below is a sample to assist you with what data to enter as the script and what output you can expect:</h4>
+                          </p><br>
+                          <b>Sample Script data </b>: Phonepe India ka sabse bada UPI payment app hai.                        
+                            Phonepe ka 2023 mein loss 2795 crore ka hai.                            
+                            Phonepe ko pehle Flipkart ne kharida phir Walmart ne kharida.                            
+                            Ab Phonepe and Flipkart seprate hone ja rahi hai.                            
+                            Phonepe ka recent funding round valuation $12 Billion tha.                            
+                            Phonepe ki shuruwat 2015 mein hui, aaj inka market par monopoly hai hi.                            
+                            Ab ye all financials service bechkar commision kamate hai.                            
+                            UPI mein paise kamana kaffi hard ke karan ye financial service mein expand karke IPO lana chahte hai.
+                            Kya Phonepe IPO laa payega?<br>
+                          ...<br>
+                          ...<br>
+                          <br><br>
+                          <b>Generated Output </b>: PhonePe: क्या यह भारत का अगला Paytm बनने जा रहा है? PhonePe भारत का सबसे बड़ा UPI पेमेंट ऐप है, जो 2015 में स्थापित किया गया था।
+
+आपको जानकर हैरानी होगी कि PhonePe को पहले Flipkart ने खरीदा और फिर Walmart ने। लेकिन अब PhonePe और Flipkart अलग होने जा रहे हैं।
+
+क्या आप जानते हैं कि PhonePe का हालि फंडिंग राउंड वैल्यूएशन $12 बिलियन था? यह काफी बड़ी उपलब्धि है!
+
+लेकिन हैरानी की बात यह है कि 2023 में PhonePe का लॉस 2795 करोड़ रुपये था। यह काफी बड़ा नुकसान है।
+
+अब PhonePe सभी फाइनेंशियल सर्विस बेचकर कमीशन Bhi कमा रहा है। हालाँकि, UPI में पैसा कमाना काफी कठिन है, इसलिए PhonePe फाइनेंशियल सर्विस में विस्तार करके IPO लाना चाहता है।
+
+तो, क्या PhonePe IPO ला पाएगा? यह तो समय ही बताएगा। लेकिन PhonePe की यात्रा काफी रोमांचक रही है और यह भारत के फिनटेक उद्योग में एक प्रमुख खिलाड़ी बना हुआ है।                        
+
+                
+                """,
+                unsafe_allow_html=True
+            )
+
 
         if selected == "Feedback":
             # Title
