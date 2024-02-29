@@ -1,14 +1,12 @@
-import streamlit as st
 import os
 import re
-import pandas as pd
-from streamlit_option_menu import option_menu
-import streamlit_analytics
-
 import textwrap
-
+import pandas as pd
+import streamlit as st
+import streamlit_analytics
 import google.generativeai as genai
 
+from streamlit_option_menu import option_menu
 from IPython.display import Markdown
 
 
@@ -222,7 +220,7 @@ def main():
     with streamlit_analytics.track():
         selected = option_menu(
             menu_title=None,  # required
-            options=["Home", "Sponsor", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
+            options=["Home", "Sponsor", "Video", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
             icons=["house", "coin","camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
@@ -238,6 +236,7 @@ def main():
             script_input = st.text_area("Drop the information you want in your script",
                                         placeholder="Get professional script in just seconds ")
             script_type_option = st.selectbox("Choose Script Type", ["Short Form", "Long Form"])
+
             checkbox_state = st.checkbox("Check the box for personalized hooks and captions according to your script.")
             button_style = """
                     <style>
@@ -330,6 +329,7 @@ def main():
 
             st.markdown(button_style, unsafe_allow_html=True)
 
+
             # Step 2: Submit Button
             if st.button("Submit", key="submit_button"):
                 # Step 3: Perform tasks on submit
@@ -349,10 +349,16 @@ def main():
                     if checkbox_state:
                         # Call the function when the checkbox is ticked
                         st.success("Generating Hooks and Captions...")
+
                         result = generate_hooks(output_script)
                         st.write(
                             "You can use the below hooks in the first line of your script.")
                         st.write(result)
+                        
+                        st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
+
+                        
+
                         # for chunk in result:
                         #    st.write(chunk.text)
 
@@ -389,7 +395,7 @@ def main():
                     #         for chunk in result:
                     #             st.write(chunk.text)
                     #         st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
+            
 
         if selected == "Sponsor":
             # Title
@@ -509,6 +515,116 @@ def main():
                         st.write(chunk.text)
 
             st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
+
+        
+        if selected == "Video":
+            button_style = """
+                    <style>
+
+                    .stDownloadButton
+                    {
+                        display : flex;
+                        align-items:center;
+                        justify-content:center;
+                    }
+
+                        button {
+                      position: relative;
+                      margin: 0;
+                      padding: 0.8em 1em;
+                      outline: none;
+                      text-decoration: none;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      cursor: pointer;
+                      border: none;
+                      text-transform: uppercase;
+                      background-color: #333;
+                      border-radius: 10px;
+                      color: #fff;
+                      font-weight: 300;
+                      font-size: 18px;
+                      font-family: inherit;
+                      z-index: 0;
+                      overflow: hidden;
+                      transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+                    }
+
+                    button:hover {
+                      animation: sh0 0.5s ease-in-out both;
+                    }
+
+                    @keyframes sh0 {
+                      0% {
+                        transform: rotate(0deg) translate3d(0, 0, 0);
+                      }
+
+                      25% {
+                        transform: rotate(7deg) translate3d(0, 0, 0);
+                      }
+
+                      50% {
+                        transform: rotate(-7deg) translate3d(0, 0, 0);
+                      }
+
+                      75% {
+                        transform: rotate(1deg) translate3d(0, 0, 0);
+                      }
+
+                      100% {
+                        transform: rotate(0deg) translate3d(0, 0, 0);
+                      }
+                    }
+
+                    button:hover span {
+                      animation: storm 0.7s ease-in-out both;
+                      animation-delay: 0.06s;
+                    }
+
+                    button::before,
+                    button::after {
+                      content: '';
+                      position: absolute;
+                      right: 0;
+                      bottom: 0;
+                      width: 100px;
+                      height: 100px;
+                      border-radius: 50%;
+                      background: #fff;
+                      opacity: 0;
+                      transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
+                      z-index: -1;
+                      transform: translate(100%, -25%) translate3d(0, 0, 0);
+                    }
+
+                    button:hover::before,
+                    button:hover::after {
+                      opacity: 0.15;
+                      transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+                    }
+
+                    button:hover::before {
+                      transform: translate3d(50%, 0, 0) scale(0.9);
+                    }
+
+                    button:hover::after {
+                      transform: translate(50%, 0) scale(1.1);
+                    }
+                </style>
+
+                        """
+            
+            st.markdown(button_style, unsafe_allow_html=True)
+
+            uploaded_file = st.file_uploader("Choose a Video file", type="mp4")
+            if uploaded_file is not None:
+                # Download Button
+                with open("./video/Tutorial_kontentgpt.mp4", 'rb') as f:
+                    st.download_button("Download Content", f,  file_name = f"{f.name}.mp4")
+                
+
+
 
         if selected == "How to Use":
             # Replace 'your_video_path' with the actual path to your video file
