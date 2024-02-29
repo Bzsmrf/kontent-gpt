@@ -221,7 +221,7 @@ def main():
         selected = option_menu(
             menu_title=None,  # required
             options=["Home", "Sponsor", "Video", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
-            icons=["house", "coin","camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
+            icons=["house", "coin","play-btn","camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -618,13 +618,11 @@ def main():
             st.markdown(button_style, unsafe_allow_html=True)
 
             uploaded_file = st.file_uploader("Choose a Video file", type="mp4")
+
             if uploaded_file is not None:
                 # Download Button
-                with open("./video/Tutorial_kontentgpt.mp4", 'rb') as f:
+                with open("./video/car_sound_aligned.mp4", 'rb') as f:
                     st.download_button("Download Content", f,  file_name = f"{f.name}.mp4")
-                
-
-
 
         if selected == "How to Use":
             # Replace 'your_video_path' with the actual path to your video file
@@ -666,7 +664,6 @@ Below is a sample to assist you with what data to enter as the script and what o
                 """,
                 unsafe_allow_html=True
             )
-
 
         if selected == "Feedback":
             # Title
