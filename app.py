@@ -220,8 +220,8 @@ def main():
     with streamlit_analytics.track():
         selected = option_menu(
             menu_title=None,  # required
-            options=["Home", "Sponsor", "Video", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
-            icons=["house", "coin","play-btn","camera-reels", "balloon-heart", "envelope", "people", "award"],  # optional
+            options=["Home", "Sponsor", "Add Audio to Video", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
+            icons=["house", "coin","camera-reels","book" ,"balloon-heart", "envelope", "people", "award"],  # optional
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -517,7 +517,9 @@ def main():
             st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
 
         
-        if selected == "Video":
+        if selected == "Add Audio to Video":
+            st.title("Add audio to your video.")
+
             button_style = """
                     <style>
 
@@ -617,12 +619,12 @@ def main():
             
             st.markdown(button_style, unsafe_allow_html=True)
 
-            uploaded_file = st.file_uploader("Choose a Video file", type="mp4")
+            uploaded_file = st.file_uploader("Select a video file, with a maximum duration of 5 seconds.", type="mp4",accept_multiple_files=False)
 
             if uploaded_file is not None:
                 # Download Button
                 with open("./video/car_sound_aligned.mp4", 'rb') as f:
-                    st.download_button("Download Content", f,  file_name = f"{f.name}.mp4")
+                    st.download_button("Download", f,  file_name = f"{f.name}.mp4")
 
         if selected == "How to Use":
             # Replace 'your_video_path' with the actual path to your video file
