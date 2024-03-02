@@ -220,8 +220,10 @@ def main():
     with streamlit_analytics.track():
         selected = option_menu(
             menu_title=None,  # required
-            options=["Home", "Sponsor", "Add Audio to Video", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
-            icons=["house", "coin","camera-reels","book" ,"balloon-heart", "envelope", "people", "award"],  # optional
+            # options=["Home", "Sponsor", "Add Audio to Video", "How to Use", "Feedback", "Contact", "About", "Bonus"],  # required
+            # icons=["house", "coin","camera-reels","book" ,"balloon-heart", "envelope", "people", "award"],  # optional
+            options=["Home", "Sponsor", "How to Use", "Feedback", "Contact", "About", "Bonus"],
+            icons=["house", "coin", "book", "balloon-heart", "envelope", "people", "award"],
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
@@ -517,114 +519,114 @@ def main():
             st.write("Please note that switching tabs will refresh your page. You may lose your current state/data.")
 
         
-        if selected == "Add Audio to Video":
-            st.title("Add audio to your video.")
-
-            button_style = """
-                    <style>
-
-                    .stDownloadButton
-                    {
-                        display : flex;
-                        align-items:center;
-                        justify-content:center;
-                    }
-
-                        button {
-                      position: relative;
-                      margin: 0;
-                      padding: 0.8em 1em;
-                      outline: none;
-                      text-decoration: none;
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      cursor: pointer;
-                      border: none;
-                      text-transform: uppercase;
-                      background-color: #333;
-                      border-radius: 10px;
-                      color: #fff;
-                      font-weight: 300;
-                      font-size: 18px;
-                      font-family: inherit;
-                      z-index: 0;
-                      overflow: hidden;
-                      transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
-                    }
-
-                    button:hover {
-                      animation: sh0 0.5s ease-in-out both;
-                    }
-
-                    @keyframes sh0 {
-                      0% {
-                        transform: rotate(0deg) translate3d(0, 0, 0);
-                      }
-
-                      25% {
-                        transform: rotate(7deg) translate3d(0, 0, 0);
-                      }
-
-                      50% {
-                        transform: rotate(-7deg) translate3d(0, 0, 0);
-                      }
-
-                      75% {
-                        transform: rotate(1deg) translate3d(0, 0, 0);
-                      }
-
-                      100% {
-                        transform: rotate(0deg) translate3d(0, 0, 0);
-                      }
-                    }
-
-                    button:hover span {
-                      animation: storm 0.7s ease-in-out both;
-                      animation-delay: 0.06s;
-                    }
-
-                    button::before,
-                    button::after {
-                      content: '';
-                      position: absolute;
-                      right: 0;
-                      bottom: 0;
-                      width: 100px;
-                      height: 100px;
-                      border-radius: 50%;
-                      background: #fff;
-                      opacity: 0;
-                      transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
-                      z-index: -1;
-                      transform: translate(100%, -25%) translate3d(0, 0, 0);
-                    }
-
-                    button:hover::before,
-                    button:hover::after {
-                      opacity: 0.15;
-                      transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
-                    }
-
-                    button:hover::before {
-                      transform: translate3d(50%, 0, 0) scale(0.9);
-                    }
-
-                    button:hover::after {
-                      transform: translate(50%, 0) scale(1.1);
-                    }
-                </style>
-
-                        """
-            
-            st.markdown(button_style, unsafe_allow_html=True)
-
-            uploaded_file = st.file_uploader("Select a video file, with a maximum duration of 5 seconds.", type="mp4",accept_multiple_files=False)
-
-            if uploaded_file is not None:
-                # Download Button
-                with open("./video/car_sound_aligned.mp4", 'rb') as f:
-                    st.download_button("Download", f,  file_name = f"{f.name}.mp4")
+        # if selected == "Add Audio to Video":
+        #     st.title("Add audio to your video.")
+        #
+        #     button_style = """
+        #             <style>
+        #
+        #             .stDownloadButton
+        #             {
+        #                 display : flex;
+        #                 align-items:center;
+        #                 justify-content:center;
+        #             }
+        #
+        #                 button {
+        #               position: relative;
+        #               margin: 0;
+        #               padding: 0.8em 1em;
+        #               outline: none;
+        #               text-decoration: none;
+        #               display: flex;
+        #               justify-content: center;
+        #               align-items: center;
+        #               cursor: pointer;
+        #               border: none;
+        #               text-transform: uppercase;
+        #               background-color: #333;
+        #               border-radius: 10px;
+        #               color: #fff;
+        #               font-weight: 300;
+        #               font-size: 18px;
+        #               font-family: inherit;
+        #               z-index: 0;
+        #               overflow: hidden;
+        #               transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+        #             }
+        #
+        #             button:hover {
+        #               animation: sh0 0.5s ease-in-out both;
+        #             }
+        #
+        #             @keyframes sh0 {
+        #               0% {
+        #                 transform: rotate(0deg) translate3d(0, 0, 0);
+        #               }
+        #
+        #               25% {
+        #                 transform: rotate(7deg) translate3d(0, 0, 0);
+        #               }
+        #
+        #               50% {
+        #                 transform: rotate(-7deg) translate3d(0, 0, 0);
+        #               }
+        #
+        #               75% {
+        #                 transform: rotate(1deg) translate3d(0, 0, 0);
+        #               }
+        #
+        #               100% {
+        #                 transform: rotate(0deg) translate3d(0, 0, 0);
+        #               }
+        #             }
+        #
+        #             button:hover span {
+        #               animation: storm 0.7s ease-in-out both;
+        #               animation-delay: 0.06s;
+        #             }
+        #
+        #             button::before,
+        #             button::after {
+        #               content: '';
+        #               position: absolute;
+        #               right: 0;
+        #               bottom: 0;
+        #               width: 100px;
+        #               height: 100px;
+        #               border-radius: 50%;
+        #               background: #fff;
+        #               opacity: 0;
+        #               transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
+        #               z-index: -1;
+        #               transform: translate(100%, -25%) translate3d(0, 0, 0);
+        #             }
+        #
+        #             button:hover::before,
+        #             button:hover::after {
+        #               opacity: 0.15;
+        #               transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+        #             }
+        #
+        #             button:hover::before {
+        #               transform: translate3d(50%, 0, 0) scale(0.9);
+        #             }
+        #
+        #             button:hover::after {
+        #               transform: translate(50%, 0) scale(1.1);
+        #             }
+        #         </style>
+        #
+        #                 """
+        #
+        #     st.markdown(button_style, unsafe_allow_html=True)
+        #
+        #     uploaded_file = st.file_uploader("Select a video file, with a maximum duration of 5 seconds.", type="mp4",accept_multiple_files=False)
+        #
+        #     if uploaded_file is not None:
+        #         # Download Button
+        #         with open("./video/car_sound_aligned.mp4", 'rb') as f:
+        #             st.download_button("Download", f,  file_name = f"{f.name}.mp4")
 
         if selected == "How to Use":
             # Replace 'your_video_path' with the actual path to your video file
