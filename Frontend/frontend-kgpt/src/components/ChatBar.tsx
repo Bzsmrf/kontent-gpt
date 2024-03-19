@@ -29,36 +29,36 @@ const ChatBar: React.FC = () => {
 		window.location.reload();
 	};
 
-	const handleRecordVoice = async () => {
-		try {
-			const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-			mediaRecorder = new MediaRecorder(stream);
+	// const handleRecordVoice = async () => {
+	// 	try {
+	// 		const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+	// 		mediaRecorder = new MediaRecorder(stream);
 
-			const audioChunks: Blob[] = [];
+	// 		const audioChunks: Blob[] = [];
 
-			mediaRecorder.start();
+	// 		mediaRecorder.start();
 
-			mediaRecorder.addEventListener('dataavailable', (event) => {
-				audioChunks.push(event.data);
-			});
+	// 		mediaRecorder.addEventListener('dataavailable', (event) => {
+	// 			audioChunks.push(event.data);
+	// 		});
 
-			mediaRecorder.addEventListener('stop', () => {
-				const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+	// 		mediaRecorder.addEventListener('stop', () => {
+	// 			const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
 
-				stream.getTracks().forEach((track) => {
-					track.stop();
-				});
+	// 			stream.getTracks().forEach((track) => {
+	// 				track.stop();
+	// 			});
 
-				// Convert audio to text using speech recognition (not implemented here)
-				// Once you have the text, update the recorded text state
-				setRecordedText('Recorded voice message');
-			});
+	// 			// Convert audio to text using speech recognition (not implemented here)
+	// 			// Once you have the text, update the recorded text state
+	// 			setRecordedText('Recorded voice message');
+	// 		});
 
-			setIsRecording(true);
-		} catch (error) {
-			console.error('Error accessing microphone:', error);
-		}
-	};
+	// 		setIsRecording(true);
+	// 	} catch (error) {
+	// 		console.error('Error accessing microphone:', error);
+	// 	}
+	// };
 
 	const handleSubmit = async () => {
 		if (requestValue == null) return;
@@ -101,7 +101,7 @@ const ChatBar: React.FC = () => {
 				<div className="relative">
 					<input
 						type="text"
-						placeholder="Type your script..."
+						placeholder="Type your `script data` and select `LONG` or `SHORT` form..."
 						value={recordedText || ''} // Ensure that value is never undefined
 						onChange={(e) => setRecordedText(e.target.value)}
 						className="h-16 w-96 py-2 px-4 bg-gray-200 text-black border-none rounded-full pr-20"
@@ -121,7 +121,7 @@ const ChatBar: React.FC = () => {
 					>
 						<PaperAirplaneIcon className="h-6 w-6" />
 					</button>
-					<div className={`absolute top-2 right-28 bg-blue-200 rounded-full p-3 hover:bg-gray-300 animate-pulse ${isRecording ? '' : 'hidden'}`}>
+					{/* <div className={`absolute top-2 right-28 bg-blue-200 rounded-full p-3 hover:bg-gray-300 animate-pulse ${isRecording ? '' : 'hidden'}`}>
 						<MicrophoneIcon className="h-6 w-6" />
 					</div>
 					<button
@@ -130,7 +130,7 @@ const ChatBar: React.FC = () => {
 						title='Use Microphone'
 					>
 						<MicrophoneIcon className="h-6 w-6" />
-					</button>
+					</button> */}
 				</div>
 
 				<div className='flex flex-row gap-5'>

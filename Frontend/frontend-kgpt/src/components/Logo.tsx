@@ -17,7 +17,7 @@ const Logo: React.FC<LogoProps> = ({ isMenuExpanded, toggleMenu }) => {
 
   return (
     <div>
-      <div className="logo" style={{ position: 'absolute', top: '25px', left: (isMobile ? (isMenuExpanded ? '11%' : '60px') : (isMenuExpanded ? '22%' : '60px')), transition: 'left 0.3s ease-in-out', zIndex: 1000 }}>
+      <div className="logo" style={{ position: 'absolute', top: '25px', left: (isMobile ? (isMenuExpanded ? '11%' : '60px') : (isMenuExpanded ? '15%' : '60px')), transition: 'left 0.3s ease-in-out', zIndex: 1000 }}>
         <a href="/">
           <img src={brandLogo} alt="KontentGpt Logo" style={{ width: '100px', height: 'auto' }} />
         </a>

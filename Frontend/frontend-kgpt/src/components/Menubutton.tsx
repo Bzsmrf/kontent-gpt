@@ -1,5 +1,6 @@
 import React from 'react';
-import { BookOpenIcon, CurrencyDollarIcon, ChatAltIcon, UsersIcon, LightningBoltIcon, MailIcon } from '@heroicons/react/outline';
+import { Link } from 'react-router-dom';
+import { BookOpenIcon, UsersIcon, LightningBoltIcon } from '@heroicons/react/outline';
 
 interface MenubuttonProps {
   isMenuExpanded: boolean;
@@ -8,6 +9,7 @@ interface MenubuttonProps {
 
 const Menubutton: React.FC<MenubuttonProps> = ({ isMenuExpanded, toggleMenu }) => {
   const isMobile = window.innerWidth <= 768;
+
   return (
     <div className="fixed top-4 left-4 z-10">
       <button
@@ -24,12 +26,7 @@ const Menubutton: React.FC<MenubuttonProps> = ({ isMenuExpanded, toggleMenu }) =
         )}
       </button>
 
-
-      <div
-        className={`fixed top-0 left-0 bg-gray-200 text-black min-w-56 h-screen w-${isMobile ? '3/4' : '1/5'} transform transition-transform duration-300 ${isMenuExpanded ? 'translate-x-0' : '-translate-x-full'
-          }`}
-      >
-        {/* Header */}
+      <div className={`fixed top-0 left-0 bg-gray-200 text-black min-w-56 h-screen w-${isMobile ? '3/4' : '1/5'} transform transition-transform duration-300 ${isMenuExpanded ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center justify-between p-4 text-black relative" style={{ top: isMenuExpanded ? '15px' : '15px', zIndex: 1000 }}>
           <button onClick={toggleMenu} className="text-white" title='close menu'>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black " fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -38,29 +35,24 @@ const Menubutton: React.FC<MenubuttonProps> = ({ isMenuExpanded, toggleMenu }) =
           </button>
         </div>
 
-        {/* Menu Options */}
         <ul className="pl-4 text-black ">
-          <li className="cursor-pointer py-2 flex items-center">
-            <BookOpenIcon className="h-6 w-6 mr-2" /> How To Use
-          </li>
-          <li className="cursor-pointer py-2 flex items-center">
-            <CurrencyDollarIcon className="h-6 w-6 mr-2" /> Sponsor
-          </li>
-          <li className="cursor-pointer py-2 flex items-center">
-            <ChatAltIcon className="h-6 w-6 mr-2" /> Feedback
-          </li>
-          <li className="cursor-pointer py-2 flex items-center">
-            <UsersIcon className="h-6 w-6 mr-2" /> About Us
-          </li>
-          <li className="cursor-pointer py-2 flex items-center">
-            <LightningBoltIcon className="h-6 w-6 mr-2" /> Contact Us
-          </li>
-          <li className="cursor-pointer py-2 flex items-center">
-            <MailIcon className="h-6 w-6 mr-2" /> Bonus
-          </li>
+          <Link to="/howtouse" className="cursor-pointer py-2 flex items-center">
+            <li className="flex flex-row">
+              <BookOpenIcon className="h-6 w-6 mr-2" /> How To Use
+            </li>
+          </Link>
+          <Link to="/aboutus" className="cursor-pointer py-2 flex items-center">
+            <li className="cursor-pointer py-2 flex items-center">
+              <UsersIcon className="h-6 w-6 mr-2" /> About Us
+            </li>
+          </Link>
+          <Link to="/contactus" className="cursor-pointer py-2 flex items-center">
+            <li className="cursor-pointer py-2 flex items-center">
+              <LightningBoltIcon className="h-6 w-6 mr-2" /> Contact Us
+            </li>
+          </Link>
         </ul>
       </div>
-
     </div>
   );
 };
