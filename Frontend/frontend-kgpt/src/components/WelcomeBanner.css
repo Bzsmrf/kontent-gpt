@@ -1,0 +1,28 @@
+.welcome-banner {
+  padding-top: 10rem !important;
+  padding: 20px;
+  font-size: 3.5rem;
+  color: transparent;
+  background-image: linear-gradient(to bottom right, #4F46E5, #9048FF, #FF477E, #FF7E00, #FFBD00);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.paragraph-below-banner {
+  padding: 20px;
+  font-size: 3.5rem;
+  color: transparent;
+  color: rgba(154, 151, 151, 0.863);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@media screen and (max-width: 768px) {
+  .welcome-banner {
+    font-size: 2.5rem;
+  }
+
+  .paragraph-below-banner {
+    font-size: 2.5rem;
+  }
+}

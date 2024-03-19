@@ -1,0 +1,38 @@
+.chat-interface {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    /* Add scrollbar for overflow */
+    max-height: 1000px;
+    /* Set max height to enable scrolling */
+    padding: 50px;
+    /* Add padding to prevent content from touching the edges */
+}
+
+.chat-bubble {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 50px;
+    /* Adjust the size as needed */
+    height: 50px;
+    /* Adjust the size as needed */
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+    .chat-interface {
+        gap: 10px;
+    }
+
+    .logo {
+        width: 30px;
+        /* Adjust the size for smaller screens */
+        height: 30px;
+        /* Adjust the size for smaller screens */
+    }
+}
