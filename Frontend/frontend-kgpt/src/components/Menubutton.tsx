@@ -9,7 +9,10 @@ interface MenubuttonProps {
 
 const Menubutton: React.FC<MenubuttonProps> = ({ isMenuExpanded, toggleMenu }) => {
   const isMobile = window.innerWidth <= 768;
-
+  const logout = () => {
+    localStorage.clear()
+    window.location.reload()
+  }
   return (
     <div className="fixed top-4 left-4 z-10">
       <button
@@ -51,6 +54,12 @@ const Menubutton: React.FC<MenubuttonProps> = ({ isMenuExpanded, toggleMenu }) =
               <LightningBoltIcon className="h-6 w-6 mr-2" /> Contact Us
             </li>
           </Link>
+          <Link to="/">
+            <li onClick={logout} className="cursor-pointer py-2 flex items-center">
+              <LightningBoltIcon className="h-6 w-6 mr-2" /> logout
+            </li>
+          </Link>
+
         </ul>
       </div>
     </div>

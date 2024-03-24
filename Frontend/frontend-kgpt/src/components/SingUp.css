@@ -1,0 +1,62 @@
+.sign-up-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /* Make the container cover the entire viewport height */
+}
+
+.sign-up-container h1 {
+    margin-bottom: 20px;
+}
+
+.sign-up-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    /* Limit the form width to improve readability */
+}
+
+.sign-up-container input,
+.sign-up-container button {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    /* Limit the input width to improve readability */
+}
+
+/* SignUp.css */
+
+.sign-up-container button {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    /* Limit the input width to improve readability */
+    border-radius: 20px;
+    /* Apply border-radius to make the button round */
+    background-color: #a3a7ab;
+    /* Change button background color */
+    color: white;
+    /* Change button text color */
+    border: none;
+    /* Remove default button border */
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
+}
+
+.sign-up-container button:hover {
+    background-color: #0056b3;
+    /* Change button background color on hover */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .sign-up-container {
+        padding: 20px;
+    }
+}

@@ -6,6 +6,7 @@ import Logo from './components/Logo';
 import HowToUse from './components/howtouse';
 import ContactUs from './components/ContactUs';
 import AboutUs from './components/AboutUS';
+import SingUp from './components/SingUp';
 
 const App: React.FC = () => {
   const [isMenuExpanded, setIsMenuExpanded] = React.useState<boolean>(false);
@@ -24,6 +25,7 @@ const App: React.FC = () => {
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/" element={<ChatBar />} />
+          <Route path="/signup" element={<SingUp />} />
         </Routes>
       </div>
     </Router>

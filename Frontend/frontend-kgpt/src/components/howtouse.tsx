@@ -1,17 +1,25 @@
 import React from "react";
 import "./howtouse.css"; // Import the CSS file for styling
+import ReactPlayer from "react-player";
 
+const isMobile = window.innerWidth <= 768;
 const HowToUse = () => {
     return (
         <div className="how-to-use-container">
             <h1>How to use</h1>
-            <div className="video-container">
-                <video controls>
-                    <source src="your-video-file.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
+            <div>
+                {isMobile ? <ReactPlayer
+                    url="https://www.youtube.com/watch?v=6-qId41pN50"
+                    width="300px"
+                    height="300px"
+                    controls
+                /> : <ReactPlayer
+                    url="https://www.youtube.com/watch?v=6-qId41pN50"
+                    controls
+                />}
+
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -1,0 +1,38 @@
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: top;
+    height: 100%;
+}
+
+.line {
+    height: 10px;
+    width: 800px;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #ccc, #92a4e7);
+    animation: pulse 1.5s infinite alternate;
+}
+
+.line:last-child {
+    margin-bottom: 0;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scaleY(0.1);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .line {
+        width: 300px;
+        /* Adjust width for mobile screens */
+    }
+}

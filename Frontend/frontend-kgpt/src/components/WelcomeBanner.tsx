@@ -1,14 +1,17 @@
+import React from 'react';
 import './WelcomeBanner.css';
 
-const WelcomeBanner = () => {
+interface WelcomeBannerProps {
+  email: string | null;
+}
+
+const WelcomeBanner: React.FC<WelcomeBannerProps> = ({ email }) => {
   return (
     <div className="relative">
-
-      <p className="welcome-banner   text-center">
-        Hello, Welcome to Kontent Gpt
+      <p className="welcome-banner text-center">
+        Hello{email ? `, ${email}` : ''}, Welcome to Kontent Gpt
       </p>
-
-    </div >
+    </div>
   );
 };
 

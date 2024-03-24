@@ -4,13 +4,20 @@ import axios from 'axios';
 import WelcomeBanner from './WelcomeBanner';
 import ChatInterface from './ChatInterface';
 
-const ChatBar: React.FC = () => {
+interface ChatBarProps {
+	email: string | null;
+}
+
+
+const ChatBar: React.FC<ChatBarProps> = ({ email }) => {
 	const [isRecording, setIsRecording] = useState(false);
 	const [recordedText, setRecordedText] = useState('');
 	const [recordedResultText, setRecordedResultText] = useState('');
 	const [selectedRadio, setSelectedRadio] = useState<number | null>(null);
 	const [requestValue, setRequestValue] = useState<number | null>(null);
 	const [isChatStarted, setIsChatStarted] = useState<boolean | null>(false);
+
+	const isMobile = window.innerWidth <= 768;
 
 	const handleRadioClick = async (value: number) => {
 		setSelectedRadio(value);
@@ -92,9 +99,9 @@ const ChatBar: React.FC = () => {
 
 	return (
 		<>
-			{!isChatStarted && <WelcomeBanner />}
+			{!isChatStarted && <WelcomeBanner email={email} />}
 			<div className="fixed bottom-7 mt-25 left-0 right-0 top-20 flex justify-end items-center flex-col gap-2">
-				{isChatStarted && <ChatInterface
+				{isChatStarted && <ChatInterface email={email}
 					question={recordedText}
 					answer={recordedResultText}
 				/>}
