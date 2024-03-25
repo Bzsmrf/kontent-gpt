@@ -27,7 +27,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ question, answer, email }
             // Simulate loading delay (replace with actual fetch or backend call)
             setTimeout(() => {
                 setLoading(false); // Set loading to false once response is received
-            }, 2000); // 2 seconds for demonstration
+            }, 15000); // 2 seconds for demonstration
         };
 
         // Call sendRequestToBackend whenever you want to send a request for the answer

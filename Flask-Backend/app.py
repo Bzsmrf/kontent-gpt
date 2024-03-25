@@ -123,6 +123,7 @@ def improve_script():
 
     print(output)
     return output.text
+    #return output
 
 
 if __name__ == '__main__':

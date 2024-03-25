@@ -9,7 +9,7 @@ const WelcomeBanner: React.FC<WelcomeBannerProps> = ({ email }) => {
   return (
     <div className="relative">
       <p className="welcome-banner text-center">
-        Hello{email ? `, ${email}` : ''}, Welcome to Kontent Gpt
+        <strong>Welcome to KontentGPT</strong>
       </p>
     </div>
   );
