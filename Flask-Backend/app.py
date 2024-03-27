@@ -121,9 +121,8 @@ def improve_script():
         prompt=long_prompt
     output = api_call(prompt=prompt)
 
-    print(output)
-    return output.text
-
+    return jsonify({'output': output.text})
+    # return output.text
 
 if __name__ == '__main__':
     app.run(debug=True)
