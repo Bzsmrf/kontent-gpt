@@ -82,12 +82,22 @@ const ChatBar: React.FC<ChatBarProps> = ({ email }) => {
 			if (requestValue == 2) {
 				const response = await axios.post('http://127.0.0.1:5000/submit_with_type', { prompt: recordedText || '', type: "Long Form" });
 				console.log('Response from backend:', response.data)
-				setRecordedResultText(response.data);
+				let outputString = typeof response.data.output === 'string' ? response.data.output : JSON.stringify(response.data.output);
+
+				// Replace ** with an empty string and \n with actual newline character
+				outputString = outputString.replace(/\*\*/g, '').replace(/\\n/g, '\n');
+
+				setRecordedResultText(outputString);
 			}
 			else if (requestValue == 1) {
 				const response = await axios.post('http://127.0.0.1:5000/submit_with_type', { prompt: recordedText || '', type: "Short Form" });
 				console.log('Response from backend:', response.data)
-				setRecordedResultText(response.data);
+				let outputString = typeof response.data.output === 'string' ? response.data.output : JSON.stringify(response.data.output);
+
+				// Replace ** with an empty string and \n with actual newline character
+				outputString = outputString.replace(/\*\*/g, '').replace(/\\n/g, '\n');
+
+				setRecordedResultText(outputString);
 			}
 
 			setIsChatStarted(true);

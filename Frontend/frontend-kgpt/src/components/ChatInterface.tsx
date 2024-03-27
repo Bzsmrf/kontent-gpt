@@ -50,7 +50,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ question, answer, email }
                 ) : (
                     <>
                         <img src={k} className='h-10' alt="Logo" />
-                        <p>{answer}</p>
+                        <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', maxHeight: '100%', }}>{answer}</pre>
                     </>
                 )}
             </div>
