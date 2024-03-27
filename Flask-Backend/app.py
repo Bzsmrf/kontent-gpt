@@ -1,7 +1,4 @@
-import os
-import re
 import textwrap
-import pandas as pd
 import google.generativeai as genai
 from IPython.display import Markdown
 from flask import Flask, request, jsonify
