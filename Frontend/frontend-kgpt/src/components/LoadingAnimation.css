@@ -8,7 +8,7 @@
 
 .line {
     height: 10px;
-    width: 800px;
+    width: 700px;
     margin-bottom: 10px;
     background: linear-gradient(to right, #ccc, #92a4e7);
     animation: pulse 1.5s infinite alternate;

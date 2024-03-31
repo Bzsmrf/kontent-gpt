@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MicrophoneIcon, PlusIcon, PaperAirplaneIcon } from '@heroicons/react/outline';
+import { PlusIcon, } from '@heroicons/react/outline';
 import axios from 'axios';
 import WelcomeBanner from './WelcomeBanner';
 import ChatInterface from './ChatInterface';
@@ -136,7 +136,10 @@ const ChatBar: React.FC<ChatBarProps> = ({ email }) => {
 						onClick={handleSubmit}
 						title='Submit'
 					>
-						<PaperAirplaneIcon className="h-6 w-6" />
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+							<path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+						</svg>
+
 					</button>
 					{/* <div className={`absolute top-2 right-28 bg-blue-200 rounded-full p-3 hover:bg-gray-300 animate-pulse ${isRecording ? '' : 'hidden'}`}>
 						<MicrophoneIcon className="h-6 w-6" />
