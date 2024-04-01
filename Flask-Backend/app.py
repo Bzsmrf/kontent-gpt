@@ -10,7 +10,7 @@ from flask_cors import CORS
 genai.configure(api_key="AIzaSyCJS35k9OVgwBgsQ0s5x9V_hEO0jZX_I78")
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
+CORS(app, resources={r"/*": {"origins": "https://kontent-gpt4.onrender.com"}})
 
 
 @app.route("/submit", methods=["POST"])
