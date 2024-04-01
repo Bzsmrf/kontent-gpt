@@ -125,8 +125,7 @@ def improve_script():
     # return output.text
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    app.run(debug=True, port=8001)
 
 # @app.route("/api_call", methods = ['POST'])
 # def api_call():
