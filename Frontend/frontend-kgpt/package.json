@@ -2,6 +2,7 @@
   "name": "frontend-kgpt",
   "private": true,
   "version": "0.0.0",
+  "proxy":"https://kontent-gpt.onrender.com" ,
   "type": "module",
   "scripts": {
     "dev": "vite",
