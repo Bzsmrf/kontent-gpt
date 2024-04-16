@@ -7,10 +7,10 @@ from IPython.display import Markdown
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-genai.configure(api_key="AIzaSyCJS35k9OVgwBgsQ0s5x9V_hEO0jZX_I78")
+genai.configure(api_key="AIzaSyDdwBzQHReI9h2EjSs0E6C_iajJu0KeNJo")
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://kontent-gpt2.onrender.com"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173/"}})
 
 
 @app.route("/submit", methods=["POST"])
