@@ -10,7 +10,8 @@ from flask_cors import CORS
 genai.configure(api_key="AIzaSyDdwBzQHReI9h2EjSs0E6C_iajJu0KeNJo")
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://kontent-gpt-production.up.railway.app/"}})
+CORS(app)
+
 
 
 @app.route("/submit", methods=["POST"])
@@ -124,8 +125,8 @@ def improve_script():
     return jsonify({'output': output.text})
     # return output.text
 
-if __name__ == '__main__':
-    app.run(debug=True, port=8001)
+if __name__ == "__main__":
+    app.run(debug=True)
 
 # @app.route("/api_call", methods = ['POST'])
 # def api_call():
