@@ -80,7 +80,7 @@ const ChatBar: React.FC<ChatBarProps> = ({ email }) => {
 
 			// Make an HTTP POST request to your Flask backend
 			if (requestValue == 2) {
-				const response = await axios.post('http://127.0.0.1:8001/submit_with_type', { prompt: recordedText || '', type: "Long Form" });
+				const response = await axios.post('https://kontentgpt-production-838d.up.railway.app/submit_with_type', { prompt: recordedText || '', type: "Long Form" });
 				console.log('Response from backend:', response.data)
 				let outputString = typeof response.data.output === 'string' ? response.data.output : JSON.stringify(response.data.output);
 
@@ -90,7 +90,7 @@ const ChatBar: React.FC<ChatBarProps> = ({ email }) => {
 				setRecordedResultText(outputString);
 			}
 			else if (requestValue == 1) {
-				const response = await axios.post('http://127.0.0.1:8001/submit_with_type', { prompt: recordedText || '', type: "Short Form" });
+				const response = await axios.post('https://kontentgpt-production-838d.up.railway.app/submit_with_type', { prompt: recordedText || '', type: "Short Form" });
 				console.log('Response from backend:', response.data)
 				let outputString = typeof response.data.output === 'string' ? response.data.output : JSON.stringify(response.data.output);
 
