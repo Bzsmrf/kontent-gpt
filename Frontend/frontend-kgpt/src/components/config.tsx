@@ -7,14 +7,13 @@ import "firebase/compat/auth";
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBhMT7zQ_6rLLPZuLUfzvkKhRAWFT_acxE",
-    authDomain: "kontent-gpt.firebaseapp.com",
-    databaseURL: "https://kontent-gpt-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "kontent-gpt",
-    storageBucket: "kontent-gpt.appspot.com",
-    messagingSenderId: "130216563574",
-    appId: "1:130216563574:web:915d78633ca35874106057",
-    measurementId: "G-KMZF81ZMSZ"
+    apiKey: "AIzaSyCf0y1Jx0YJw5zajae3s4DC7SV_OsjuIB4",
+    authDomain: "kontent-gpt-3cb4b.firebaseapp.com",
+    projectId: "kontent-gpt-3cb4b",
+    storageBucket: "kontent-gpt-3cb4b.appspot.com",
+    messagingSenderId: "1039058408790",
+    appId: "1:1039058408790:web:954b1fcbf556205a0fb2f7",
+    measurementId: "G-61Q9CPE6YY"
 };
 
 
