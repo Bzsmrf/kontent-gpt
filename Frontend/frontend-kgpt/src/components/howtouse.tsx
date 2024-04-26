@@ -9,12 +9,12 @@ const HowToUse = () => {
             <h1>How to use</h1>
             <div>
                 {isMobile ? <ReactPlayer
-                    url="https://www.youtube.com/watch?v=6-qId41pN50"
+                    url="https://youtu.be/tGSBVagQdeM"
                     width="300px"
                     height="300px"
                     controls
                 /> : <ReactPlayer
-                    url="https://www.youtube.com/watch?v=6-qId41pN50"
+                    url="https://youtu.be/tGSBVagQdeM"
                     controls
                 />}
 
