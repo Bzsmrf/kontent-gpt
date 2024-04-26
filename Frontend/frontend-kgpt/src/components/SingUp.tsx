@@ -19,7 +19,7 @@ const SingUp: React.FC = () => {
     const handleClick = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
-                const userEmail = result.user.email;
+                const userEmail = result.user.displayName;
                 localStorage.setItem("email", userEmail);
                 setEmail(userEmail);
             })
