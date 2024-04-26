@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios'; // Import Axios
 import "./SingUp.css";
 import { auth, provider } from "./config";
 import { signInWithPopup } from "firebase/auth";
@@ -22,23 +23,18 @@ const SignUp: React.FC = () => {
             .then((result) => {
                 const userEmail = result.user.email;
                 const userDisplayName = result.user.displayName;
-                localStorage.setItem("email", userEmail);
+                console.log(result.user, userDisplayName);
+                localStorage.setItem("email", result.user);
                 setEmail(userEmail);
                 setDisplayName(userDisplayName);
 
-                // Send POST request to backend to get JWT token
-                fetch('https://kontentgpt-production-838d.up.railway.app/profile', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email: userEmail, displayName: userDisplayName }),
-                })
-                    .then(response => response.json())
-                    .then(data => {
+                // Send POST request to backend to get JWT token using Axios
+                axios.post('https://kontentgpt-production-838d.up.railway.app/profile', { email_id: result.user.email, name: result.user.displayName })
+                    .then(response => {
                         // Store JWT token in local storage
-                        localStorage.setItem('jwtToken', data.token);
-                        console.log('JWT Token:', data.token);
+                        localStorage.setItem('jwtToken', response.data);
+                        // Console log the JWT token
+                        console.log('JWT Token:', response.data);
                     })
                     .catch(error => {
                         setError(error.message);
