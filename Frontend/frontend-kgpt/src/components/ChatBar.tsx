@@ -6,10 +6,11 @@ import ChatInterface from './ChatInterface';
 
 interface ChatBarProps {
 	email: string | null;
+	displayName: string | null;
 }
 
 
-const ChatBar: React.FC<ChatBarProps> = ({ email }) => {
+const ChatBar: React.FC<ChatBarProps> = ({ email, displayName }) => {
 	const [isRecording, setIsRecording] = useState(false);
 	const [recordedText, setRecordedText] = useState('');
 	const [recordedResultText, setRecordedResultText] = useState('');
@@ -109,7 +110,7 @@ const ChatBar: React.FC<ChatBarProps> = ({ email }) => {
 
 	return (
 		<>
-			{!isChatStarted && <WelcomeBanner email={email} />}
+			{!isChatStarted && <WelcomeBanner displayName={displayName} />}
 			<div className="fixed bottom-7 mt-25 left-0 right-0 top-20 flex justify-end items-center flex-col gap-2">
 				{isChatStarted && <ChatInterface email={email}
 					question={recordedText}

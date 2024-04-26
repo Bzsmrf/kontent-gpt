@@ -54,7 +54,7 @@ const Menubutton: React.FC<MenubuttonProps> = ({ isMenuExpanded, toggleMenu }) =
               <LightningBoltIcon className="h-6 w-6 mr-2" /> Contact Us
             </li>
           </Link>
-          <Link to="/">
+          <Link to="/signup">
             <li onClick={logout} className="cursor-pointer py-2 flex items-center">
               <LightningBoltIcon className="h-6 w-6 mr-2" /> logout
             </li>

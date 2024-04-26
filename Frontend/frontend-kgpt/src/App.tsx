@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import ChatBar from './components/ChatBar';
 import Menubutton from './components/Menubutton';
 import Logo from './components/Logo';
@@ -10,6 +10,17 @@ import SingUp from './components/SingUp';
 
 const App: React.FC = () => {
   const [isMenuExpanded, setIsMenuExpanded] = React.useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    // Check if the JWT token exists in local storage or session storage
+    const jwtToken = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
+    if (jwtToken) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuExpanded(!isMenuExpanded);
@@ -24,7 +35,7 @@ const App: React.FC = () => {
           <Route path="/howtouse" element={<HowToUse />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/" element={<ChatBar />} />
+          <Route path="/" element={isLoggedIn ? <ChatBar /> : <Navigate to="/signup" />} />
           <Route path="/signup" element={<SingUp />} />
         </Routes>
       </div>
