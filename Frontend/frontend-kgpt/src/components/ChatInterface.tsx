@@ -13,11 +13,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ question, answer, email }
     const [loading, setLoading] = useState(false); // Initially not loading
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Initially assume not logged in
 
-    // useEffect(() => {
-    //     // Check if the user is logged in when the email changes
-    //     setIsLoggedIn(email !== null);
-    // }, [email]); // Trigger effect when email changes
-
     useEffect(() => {
         // Function to send request to backend
         const sendRequestToBackend = () => {
@@ -27,7 +22,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ question, answer, email }
             // Simulate loading delay (replace with actual fetch or backend call)
             setTimeout(() => {
                 setLoading(false); // Set loading to false once response is received
-            }, 30000); // 2 seconds for demonstration
+            }, 3000); // 3 seconds for demonstration
         };
 
         // Call sendRequestToBackend whenever you want to send a request for the answer
@@ -37,13 +32,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ question, answer, email }
 
     return (
         <div className='w-full h-full flex flex-col gap-5 overflow-y-auto items-center ' style={{ scrollbarWidth: 'thin', scrollbarColor: 'inherit' }}>
-            {/* {isLoggedIn ? ( // If user is logged in, render question */}
             <div className={`${isMobile ? 'w-full' : 'w-1/2'} h-auto flex flex-row gap-5 p-5 justify-start items-center`}>
                 <img src={k} className='h-10' alt="Logo" />
                 <p>{question}</p>
             </div>
-            {/* ) : null} */}
-            {/* {!isLoggedIn ? ( */}
             <div className={`${isMobile ? 'w-full' : 'w-1/2'} h-full flex flex-row gap-5 p-5 justify-center items-start`}>
                 {loading ? (
                     <LoadingAnimation />
@@ -54,7 +46,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ question, answer, email }
                     </>
                 )}
             </div>
-            {/* ) : null} */}
         </div>
     );
 };

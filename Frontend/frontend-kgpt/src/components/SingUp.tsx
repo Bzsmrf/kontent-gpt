@@ -23,7 +23,7 @@ const SignUp: React.FC = () => {
             .then((result) => {
                 const userEmail = result.user.email;
                 const userDisplayName = result.user.displayName;
-                console.log(result.user, userDisplayName);
+                console.log(userEmail, userDisplayName);
                 localStorage.setItem("email", result.user);
                 setEmail(userEmail);
                 setDisplayName(userDisplayName);

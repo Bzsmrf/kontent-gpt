@@ -17,6 +17,10 @@ const ChatBar: React.FC<ChatBarProps> = ({ email, displayName }) => {
 	const [selectedRadio, setSelectedRadio] = useState<number | null>(null);
 	const [requestValue, setRequestValue] = useState<number | null>(null);
 	const [isChatStarted, setIsChatStarted] = useState<boolean | null>(false);
+	const token = localStorage.getItem('jwtToken');
+
+	console.log("jwtTokenn", token);
+	console.log(token, "token while making request");
 
 	// const isMobile = window.innerWidth <= 768;
 
@@ -79,10 +83,32 @@ const ChatBar: React.FC<ChatBarProps> = ({ email, displayName }) => {
 				setIsRecording(false);
 			}
 
+			// Define headers with the token
+			const headers = {
+				token: token
+			};
+
 			// Make an HTTP POST request to your Flask backend
-			if (requestValue == 2) {
-				const response = await axios.post('https://kontentgpt-production-838d.up.railway.app/submit_with_type', { prompt: recordedText || '', type: "Long Form" });
-				console.log('Response from backend:', response.data)
+			if (requestValue === 2) {
+				const response = await axios.post(
+					'https://kontentgpt-production-838d.up.railway.app/submit_with_type',
+					{ prompt: recordedText || '', type: "Long Form" },
+					{ headers } // Include headers in the request
+				);
+				console.log('Response from backend:', response.data);
+				let outputString = typeof response.data.output === 'string' ? response.data.output : JSON.stringify(response.data.output);
+
+				// Replace ** with an empty string and \n with actual newline character
+				outputString = outputString.replace(/\*\*/g, '').replace(/\\n/g, '\n');
+
+				setRecordedResultText(outputString);
+			} else if (requestValue === 1) {
+				const response = await axios.post(
+					'https://kontentgpt-production-838d.up.railway.app/submit_with_type',
+					{ prompt: recordedText || '', type: "Short Form" },
+					{ headers } // Include headers in the request
+				);
+				console.log('Response from backend:', response.data);
 				let outputString = typeof response.data.output === 'string' ? response.data.output : JSON.stringify(response.data.output);
 
 				// Replace ** with an empty string and \n with actual newline character
@@ -90,23 +116,15 @@ const ChatBar: React.FC<ChatBarProps> = ({ email, displayName }) => {
 
 				setRecordedResultText(outputString);
 			}
-			else if (requestValue == 1) {
-				const response = await axios.post('https://kontentgpt-production-838d.up.railway.app/submit_with_type', { prompt: recordedText || '', type: "Short Form" });
-				console.log('Response from backend:', response.data)
-				let outputString = typeof response.data.output === 'string' ? response.data.output : JSON.stringify(response.data.output);
 
-				// Replace ** with an empty string and \n with actual newline character
-				outputString = outputString.replace(/\*\*/g, '').replace(/\\n/g, '\n');
-
-				setRecordedResultText(outputString);
-			}
-
-			setIsChatStarted(true);
+			setRecordedText(''); // Clear recorded text after submission
+			setSelectedRadio(null); // Clear selected radio after submission
 
 		} catch (error) {
 			console.error('Error submitting data:', error);
 		}
 	};
+
 
 	return (
 		<>
