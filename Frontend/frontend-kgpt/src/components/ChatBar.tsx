@@ -117,12 +117,13 @@ const ChatBar: React.FC<ChatBarProps> = ({ email, displayName }) => {
 				setRecordedResultText(outputString);
 			}
 
-			setRecordedText(''); // Clear recorded text after submission
-			setSelectedRadio(null); // Clear selected radio after submission
+			// setRecordedText(''); 
+			setSelectedRadio(null);
 
 		} catch (error) {
 			console.error('Error submitting data:', error);
 		}
+
 	};
 
 
@@ -207,3 +208,15 @@ const ChatBar: React.FC<ChatBarProps> = ({ email, displayName }) => {
 };
 
 export default ChatBar;
+
+
+
+
+
+
+
+
+
+
+
+
